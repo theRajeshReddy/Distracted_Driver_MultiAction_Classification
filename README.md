@@ -33,12 +33,3 @@ Implimented done in TensorFlow 2.0 using CNN architecture
 4. Early Stopping with patience of 5
 5. Model Fit with Batch of 50 and 15 Epochs
 6. Save the Model
-
-**Model Building** 
-
-*Code* : Distracted Driver Load Model.ipynb
-
-1. Read Test Images
-2. Scaling images to 240x240
-3. Load the Saved model
-4. Predict or validate
