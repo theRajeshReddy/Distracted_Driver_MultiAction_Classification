@@ -12,7 +12,7 @@
   - c6: drinking
   - c7: reaching behind
   - c8: hair and makeup
-  - c9: talking to passengerType some Markdown on the left
+  - c9: talking to passenger
 
 **Programming Language** : Python using TensorFlow 2.0 & Keras
   
@@ -89,6 +89,19 @@ callback = [callbacks.EarlyStopping(monitor='val_accuracy',patience=5)]
 ```
 **Model Performance Review**
 
-*Model training vs validation accuracy and loss report*
+*Model training vs validation accuracy and loss trend for each epoch*
 
-<img src="Images/Model_Training_Results.JPG" width="300">
+<img src="Images/Model_Training_Results.JPG" width="400">
+
+*Plot Confusion Matrix to check if there are any imbalences in Validation Class prediction*
+
+From the report it doen't look like there are any considerable imbalance classes for the model
+
+<img src="Images/Confusion_Matrix.JPG" width="400">
+
+*Classification Report to check Precision, Recall and F1 Score*
+
+The Model Seem to performing well with score of 99%
+
+<img src="Images/Classification_Report.JPG" width="400">
+
