@@ -14,22 +14,81 @@
   - c8: hair and makeup
   - c9: talking to passengerType some Markdown on the left
 
-**Data Preparation** 
+**Programming Language** : Python using TensorFlow 2.0 & Keras
+  
+**Model Architecture** : Deep Learning using CNN
+  
+**About Data Set** 
+The Data set is images of different people in a driver seat doing different things. Data set already divided into Train and Test by folders.
+1. Train Data - Has Classes as subfolders and each subfolder has images of only corresponding Class  
+2. Test Data - Has images of the all classes 
 
-*Code* : Distracted_Driver_MultiAction_Classification.ipynb
+*All the images are of 640x240 resolution*
 
-1. Iterating and Reading the Training and Test files
-2. Scaling images to 240x240
+**Data Pre-Processing**
+In order to build a Classification model we have to read and convert the images to a numerical array type data.
+
+*Read Train Data*
+```python
+# creating a training dataset.
+training_data = []
+i = 0
+def create_training_data():
+    for category in classes:
+        path = os.path.join(directory,category)
+        class_num = classes.index(category)
+        
+        for img in os.listdir(path):
+            img_array = cv2.imread(os.path.join(path,img),cv2.IMREAD_COLOR)
+            RGB_img = cv2.cvtColor(img_array, cv2.COLOR_BGR2RGB)
+            new_img = cv2.resize(RGB_img,(img_size,img_size))
+            training_data.append([new_img,class_num])
+
+create_training_data()
+```
+
+*Reading the Training images that are in the folders of each class*
+1. Declare an empty list Object where we will store the image array and the Class Label
+2. loop through each Class folder and Store the Class Label 
+3. loop through each image in the folder
+4. Read the Image
+5. Resize the Image to 240x240
+6. Add the Image and Class Label data to the Training Data list
+
+
+*Seperate the feature(Image Data) and its labels(Class Label)*
+```python
+x = [], y = []
+for features, label in training_data:
+    x.append(features)
+    y.append(label)
+```
+
+*Convert the Class Labes to Categorical values(I used Keras utils)*
+```python
+Y_train = utils.to_categorical(y_train,num_classes=10)
+Y_test = utils.to_categorical(y_test,num_classes=10)
+```
 
 **Model Building** 
 
-*Code* : Distracted_Driver_MultiAction_Classification.ipynb
+Implemented done in TensorFlow 2.0 using Keras as high level api. Architecture used is Convolutional Neural Network(CNN)
 
-Implimented done in TensorFlow 2.0 using CNN architecture 
+*CNN Model* : The model has 3 CNN Layers,Flattening layer and Fully connected Dense Layers
 
-1. Inastall Tensorflow 2.0 and use tf.keras as high level api
-2. Model has 3 CNN layers (each layer has Conv2D+BatchNormalization+Conv2D+BatchNormalization+MaxPooling2D+Dropout), Flattening layer and Dense Layers
-3. Model Compilatation with loss='categorical_crossentropy',metrics=['accuracy'],optimizer='adam'
-4. Early Stopping with patience of 5
-5. Model Fit with Batch of 50 and 15 Epochs
-6. Save the Model
+Each Layer has
+  - 2 Conv2D layers (first layer with input of shape 240,240,3 (240x240 - Image Scale, 3 - RGB Scale))
+  - 2 BatchNormalization layers [For Info click here](https://medium.com/deeper-learning/glossary-of-deep-learning-batch-normalisation-8266dcd2fa82)
+  - 1 Dropout Layer of rate 30% 
+  
+*Model Compilattion with loss='categorical_crossentropy',metrics='accuracy' and optimizer='adam'*
+
+*Call back for early stopping when test accuracy doesn't increase in 5 epochs*
+```python
+callback = [callbacks.EarlyStopping(monitor='val_accuracy',patience=5)]
+```
+**Model Performance Review**
+
+*Model training vs validation accuracy and loss report*
+
+<img src="Images/Model_Training_Results.JPG" width="300">
