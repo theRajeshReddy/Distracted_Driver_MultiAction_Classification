@@ -72,7 +72,7 @@ Y_test = utils.to_categorical(y_test,num_classes=10)
 
 **Model Building** 
 
-Implemented done in TensorFlow 2.0 using Keras as high level api. Architecture used is Convolutional Neural Network(CNN)
+Implemented in TensorFlow 2.0 using Keras as high level api. Architecture used is Convolutional Neural Network(CNN)
 
 *CNN Model* : The model has 3 CNN Layers,Flattening layer and Fully connected Dense Layers
 
